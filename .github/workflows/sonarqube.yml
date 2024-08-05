@@ -28,3 +28,9 @@ jobs:
         run: |
           sudo apt-get install -y trivy
           trivy fs . > trivyfs.txt
+     
+      - name: Upload Trivy results
+        uses: actions/upload-artifact@v2
+        with:
+          name: trivy-results
+          path: trivyfs.txt

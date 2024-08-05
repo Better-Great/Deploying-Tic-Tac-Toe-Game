@@ -52,3 +52,6 @@ jobs:
 
         env: 
           DOCKER_CLI_ACI: 1
+          
+      - name: Image Scan
+        run: trivy image bettergreat/tic-tac-toe:latest > trivyimage.txt

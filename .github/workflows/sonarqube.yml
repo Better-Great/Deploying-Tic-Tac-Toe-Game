@@ -77,6 +77,11 @@ jobs:
       
       - name: Deploy to container
         run: docker run -d --name game -p 3000:3000 bettergreat/tic-tac-toe:latest
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       
       - name: Update kubeconfig
         run: doctl kubernetes cluster kubeconfig save tic-tac-toe-cluster

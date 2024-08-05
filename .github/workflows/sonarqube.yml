@@ -25,4 +25,6 @@ jobs:
         run: npm install
 
       - name: Trivy file scan
-        run: trivy fs . > trivyfs.txt
+        run: |
+          sudo apt-get install -y trivy
+          trivy fs . > trivyfs.txt

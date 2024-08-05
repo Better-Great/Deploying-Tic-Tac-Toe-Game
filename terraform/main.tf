@@ -19,18 +19,18 @@ provider "digitalocean" {
 # Create a new Docker VPC
 resource "digitalocean_vpc" "tic-tac-toe_vpc" {
   name   = "tic-tac-toe-vpc"
-  region = "nyc3"
+  region = "lon1"
   ip_range = "10.10.10.0/24"
 }
 
 # Create a Kubernetes Cluster
 resource "digitalocean_kubernetes_cluster" "tic-tac-toe" {
   name    = "tic-tac-toe-cluster"
-  region  = "nyc3"
+  region  = "lon1"
   version = "1.30.2-do.0"  # Use the latest version available
 
   node_pool {
-    name       = "worker-pool"
+    name       = "tic-tac-toe-worker"
     size       = "s-2vcpu-2gb"  # This is similar to t2.medium in terms of resources
     auto_scale = true
     min_nodes  = 1

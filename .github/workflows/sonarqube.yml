@@ -8,7 +8,7 @@ on:
 jobs:
   build-analyze-scan:
     name: Build
-    runs-on: self-hosted  # Use a standard runner for better compatibility
+    runs-on: [Linux]  # Use a standard runner for better compatibility
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -19,9 +19,3 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      # Uncomment the following lines to fail the job if the Quality Gate is red
-      # - name: SonarQube Quality Gate
-      #   uses: sonarsource/sonarqube-quality-gate-action@v1.0.0
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-

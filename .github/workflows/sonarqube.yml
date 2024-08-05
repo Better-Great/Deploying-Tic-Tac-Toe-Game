@@ -12,10 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Verify SonarQube URL
-        run: curl -I ${{ secrets.SONAR_HOST_URL }}
-
+        
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v1.0.0  # Specify a stable version
         with:

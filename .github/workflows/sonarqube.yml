@@ -9,7 +9,7 @@ on:
 jobs:
   build-analyze-scan:
     name: Build
-    runs-on: [Linux, X64, tic-tak-game-githubactions]
+    runs-on: [Linux,X64,tic-tak-game-githubactions]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

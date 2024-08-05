@@ -60,15 +60,6 @@ jobs:
     needs: build-analyze-scan
     runs-on: ubuntu-latest
     steps: 
-      - name: Install Trivy
-        run: |
-          sudo apt-get install wget apt-transport-https gnupg lsb-release
-          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
-          sudo apt-get update
-          sudo apt-get install trivy
-        continue-on-error: true
-        
       - name: docker pull image
         run: docker pull bettergreat/tic-tac-toe:latest
 
@@ -77,3 +68,19 @@ jobs:
       
       - name: Deploy to container
         run: docker run -d --name game -p 3000:3000 bettergreat/tic-tac-toe:latest
+      
+      - name: Update kubeconfig
+        run: doctl kubernetes cluster kubeconfig save tic-tac-toe-cluster
+
+      - name: Deploy to kubernetes
+        run: kubectl apply -f deployment.yml service.yml
+
+      - name: Send a Slack Notification
+        if: always()
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#github-tic-tac-toe-game'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

@@ -8,14 +8,14 @@ on:
 jobs:
   build-analyze-scan:
     name: Build
-    runs-on: ubuntu-latest  # Use a standard runner for better compatibility
+    runs-on: [Linux]  # Use a standard runner for better compatibility
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v1.0.0  # Specify a version tag
+      - name: Build and analyze with Sonarqube
+        uses: sonarsource/sonarqube-scan-action@master  # Specify a version tag
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

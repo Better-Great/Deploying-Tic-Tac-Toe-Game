@@ -60,6 +60,9 @@ jobs:
     needs: build-analyze-scan
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
       - name: Install Trivy
         run: |
           sudo apt-get install wget apt-transport-https gnupg lsb-release
@@ -87,7 +90,7 @@ jobs:
         run: doctl kubernetes cluster kubeconfig save tic-tac-toe-cluster
 
       - name: Deploy to kubernetes
-        run: kubectl apply -f deployment.yml -f service.yml
+        run: kubectl apply -f $GITHUB_WORKSPACE/deployment.yml -f $GITHUB_WORKSPACE/service.yml
 
       - name: Send a Slack Notification
         if: always()
